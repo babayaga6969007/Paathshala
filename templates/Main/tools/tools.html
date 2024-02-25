@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paathshala Tools</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #fff;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .grid-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    
+    <div class="grid-container">
+        <div class="grid-item">
+            <h2>Engineering Calculator</h2>
+            <a href="{% url 'engcon' %}">
+                <img src="https://freesvg.org/img/calculatrice.png" width="200" height="300">
+            </a>
+        </div>
+        <div class="grid-item">
+            <h2>PDF Compressor</h2>
+            <a href="{% url 'pdfcon' %}">
+                <img src="https://w7.pngwing.com/pngs/433/5/png-transparent-pdf-information-document-printing-promotion-label-angle-text-logo.png"  width="200" height="300">
+            </a>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-item">
+            <h2>PDF to Word</h2>
+            <a href="{% url 'pdfword' %}">
+                <img src="https://w7.pngwing.com/pngs/566/951/png-transparent-microsoft-word-logo-microsoft-word-microsoft-office-2013-microsoft-excel-computer-software-office-template-blue-angle.png"  width="200" height="300">
+            </a>
+        </div>
+        <div class="grid-item">
+            <h2>Image Converter</h2>
+            <a href="{% url 'imgcon' %}">
+                <img src="https://webptojpgs.com/ppp.png"  width="200" height="300">
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
+{% endblock %}

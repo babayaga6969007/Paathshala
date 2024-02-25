@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Paathshala PDF Compressor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    #fileInput {
+      display: none;
+    }
+    
+    #compressBtn {
+      margin-top: 20px;
+    }
+    
+    #outputContainer {
+      margin-top: 20px;
+      display: none;
+    }
+    
+    #downloadLink {
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>PDF Compressor</h1>
+  
+  <input type="file" id="fileInput" accept=".pdf">
+  <button id="chooseFileBtn" onclick="chooseFile()">Choose File</button>
+  
+  <button id="compressBtn" onclick="compressPDF()">Compress PDF</button>
+  
+  <div id="outputContainer">
+    <h3>Compressed PDF:</h3>
+    <a id="downloadLink" href="#" download>Download</a>
+    <embed id="pdfViewer" width="100%" height="600px" type="application/pdf">
+  </div>
+  
+  <script>
+    let inputFile;
+    
+    function chooseFile() {
+      document.getElementById('fileInput').click();
+    }
+    
+    function compressPDF() {
+      inputFile = document.getElementById('fileInput').files[0];
+      
+      if (!inputFile) {
+        alert('Please choose a PDF file.');
+        return;
+      }
+      
+      const reader = new FileReader();
+      
+      reader.onload = function() {
+        const compressedData = compressArrayBuffer(reader.result);
+        const blob = new Blob([compressedData], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        
+        document.getElementById('outputContainer').style.display = 'block';
+        document.getElementById('pdfViewer').setAttribute('src', url);
+        document.getElementById('downloadLink').setAttribute('href', url);
+        document.getElementById('downloadLink').style.display = 'inline-block';
+      };
+      
+      reader.readAsArrayBuffer(inputFile);
+    }
+    
+    function compressArrayBuffer(data) {
+      
+      return data;
+    }
+  </script>
+</body>
+</html>
+

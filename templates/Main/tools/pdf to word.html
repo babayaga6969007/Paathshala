@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>PDF to Word Converter</title>
+  </head>
+  <body>
+    <style type="text/css">
+      body {
+  font-family: Arial, sans-serif;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+#conversion-status {
+  margin-top: 20px;
+}
+
+    </style>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', () => {
+  const converterForm = document.getElementById('converter-form');
+  const conversionStatus = document.getElementById('conversion-status');
+
+  converterForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const pdfFile = document.getElementById('pdf-file').files[0];
+
+    if (!pdfFile) {
+      conversionStatus.textContent = 'Please select a PDF file.';
+      return;
+    }
+
+    conversionStatus.textContent = 'Converting...';
+
+    
+    const formData = new FormData();
+    formData.append('pdf', pdfFile);
+    fetch('/convert', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          conversionStatus.textContent = `Error: ${data.error}`;
+        } else {
+          // Display a link to the converted Word document.
+          conversionStatus.innerHTML = `
+            Conversion successful! <br>
+            <a href="${data.wordUrl}" download>Download Word document</a>
+          `;
+        }
+      })
+      .catch((error) => {
+        conversionStatus.textContent = `Error: ${error}`;
+      });
+  });
+});
+
+    </script>
+    <h1>PDF to Word Converter</h1>
+    <form id="converter-form">
+      <label for="pdf-file">Select a PDF file:</label><br>
+      <input type="file" id="pdf-file" accept="application/pdf"><br>
+      <button type="submit">Convert to Word</button>
+    </form>
+    <div id="conversion-status"></div>
+  </body>
+</html>
