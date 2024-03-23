@@ -119,4 +119,10 @@ class UserCource(models.Model):
     def __str__(self):
         return self.user.first_name + " - " + self.course.title
     
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    interests= models.TextField()    
+    def __str__(self):
+        return str(self.user)
+    
   

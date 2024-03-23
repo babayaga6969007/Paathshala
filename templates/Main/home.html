@@ -114,7 +114,7 @@
                                     </a>
 
                                     <!-- Preheading -->
-                                    <a href="course-single-v5.html"><span class="mb-1 d-inline-block text-gray-800">{{i.category.name}}</span></a>
+                                    <a href="#"><span class="mb-1 d-inline-block text-gray-800">{{i.category.name}}</span></a>
 
 
                                     <!-- Heading -->
@@ -216,7 +216,7 @@
                                         </a>
                                     </div>
 
-                                    <a href="course-single-v5.html" class="card-img sk-thumbnail img-ratio-9 d-block">
+                                    <a href="http://127.0.0.1:8000/course/{{course.title}}" class="card-img sk-thumbnail img-ratio-9 d-block">
                                         <img class="rounded shadow-light-lg" src="/{{i.featured_image}}" alt="...">
                                     </a>
 
@@ -316,7 +316,7 @@
                     <p class="font-size-lg mb-0 text-capitalize">Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
                 </div>
                 <div class="col-md-auto">
-                    <a href="course-list-v6.html" class="d-flex align-items-center fw-medium">
+                    <a href="http://127.0.0.1:8000/course/{{course.title}}" class="d-flex align-items-center fw-medium">
                         Browse All
                         <div class="ms-2 d-flex">
                             <!-- Icon -->
@@ -333,7 +333,7 @@
                 {% for i in category %}
                 <div class="col mb-md-6 mb-4 px-2 px-md-4">
                     <!-- Card -->
-                    <a href="course-list-v6.html" class="card bg-lavender hover-gradient-1 rounded-lg p-md-5 p-3 h-210p text-center lift">
+                    <a href="http://127.0.0.1:8000/courses" class="card bg-lavender hover-gradient-1 rounded-lg p-md-5 p-3 h-210p text-center lift">
                         <!-- Image -->
                         <div class="mt-7 text-gigas display-4">
                             <i class="{{i.icon}}"></i>
@@ -358,8 +358,10 @@
         <div class="container container-wd">
             <div class="row align-items-center mb-6">
                 <div class="col-md-6 order-2" data-aos="fade-left">
-                    <h2>Learn at your own pace</h2>
-                    <p class="line-clamp-3 line-height-md">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.Join millions of people from around the world learning together. Online learning is as easy and natural as chatting.</p>
+                    <h2>About Us</h2>
+                    <p class="line-clamp-3 line-height-md">
+                        
+"Paathshala" is a cutting-edge Learning Management System (LMS) tailored for Nepal. It offers a seamless blend of traditional and digital learning, empowering students, teachers, and institutions with its user-friendly interface and diverse features.</p>
                 </div>
 
                 <div class="col-md-6 order-1 mb-8 mb-md-0" data-aos="zoom-in">
@@ -370,7 +372,7 @@
             <div class="row align-items-center">
                 <div class="col-md-6 order-2 order-md-1" data-aos="fade-right">
                     <h2>Community of opportunities</h2>
-                    <p class="line-clamp-3 line-height-md">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.Join millions of people from around the world learning together. Online learning is as easy and natural as chatting.</p>
+                    <p class="line-clamp-3 line-height-md">Paathshala facilitates remote education delivery, making learning accessible across Nepal while fostering academic excellence and lifelong learning.</p>
                 </div>
 
                 <div class="col-md-6 order-1 mb-8 mb-md-0 order-md-2 text-right" data-aos="zoom-in">
@@ -379,34 +381,4 @@
             </div>
         </div>
     </section>
-
-    <!-- CALL ACTION
-    ================================================== -->
-    <section class="py-6 py-md-10 bg-white">
-        <div class="container container-wd">
-            <div class="bg-gradient-1 rounded-lg py-md-9 py-8 px-md-8 px-5">
-                <div class="row align-items-center">
-                    <div class="col-xl-7 mb-4 mb-xl-0 text-capitalize">
-                        <h1 class="text-white mb-3">Subscribe our newsletter</h1>
-                        <p class="font-size-lg text-white mb-3">Your download should start automatically, if not  Click here. Should I give up, huh?.</p>
-                    </div>
-
-                    <div class="col-xl-5">
-                        <form method="post">
-                        {% csrf_token %}
-                       
-                            <div class="input-group d-block d-md-flex bg-white p-1 rounded-lg">
-                                <input type="text" class="form-control w-100 w-md-auto form-control-sm rounded-lg border-0 placeholder-1" placeholder="Enter your email" aria-label="Enter your email" aria-describedby="button-addon2">
-                                <div class="input-group-append ms-0">
-                                    <button class="btn btn-sm btn-dark w-100 w-md-auto btn-wide rounded-lg border-0" type="submit" id="button-addon2">Subscribe</button>
-
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
 {% endblock %}

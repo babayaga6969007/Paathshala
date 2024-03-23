@@ -41,21 +41,23 @@
     </style>
 </head>
 <body>
+   
 
     
     <div class="grid-container">
+        <div class="grid-item">
+            <h2>Resume Maker</h2>
+            <a href="{% url 'resume' %}">
+                <img src="https://designcuts.b-cdn.net/wp-content/uploads/2023/03/simple-resume-cv-template-editable.jpg"  width="200" height="300">
+            </a>
+        </div>
         <div class="grid-item">
             <h2>Engineering Calculator</h2>
             <a href="{% url 'engcon' %}">
                 <img src="https://freesvg.org/img/calculatrice.png" width="200" height="300">
             </a>
         </div>
-        <div class="grid-item">
-            <h2>PDF Compressor</h2>
-            <a href="{% url 'pdfcon' %}">
-                <img src="https://w7.pngwing.com/pngs/433/5/png-transparent-pdf-information-document-printing-promotion-label-angle-text-logo.png"  width="200" height="300">
-            </a>
-        </div>
+       
     </div>
 
     <div class="grid-container">
@@ -71,6 +73,21 @@
                 <img src="https://webptojpgs.com/ppp.png"  width="200" height="300">
             </a>
         </div>
+        
+    </div>
+    <div class="grid-container">
+    <div class="grid-item">
+        <h2>PDF Compressor</h2>
+        <a href="{% url 'pdfcon' %}">
+            <img src="https://w7.pngwing.com/pngs/433/5/png-transparent-pdf-information-document-printing-promotion-label-angle-text-logo.png"  width="200" height="300">
+        </a>
+    </div>
+    <div class="grid-item">
+        <h2>Jarvis</h2>
+        <a href="{% url 'jarvis' %}">
+            <img src="https://ingestai.io/storage/articles/2023-04/AQblaydchTF90W6q1PhM48tLamOVEVZCRMt30x2X.jpg"  width="200" height="300">
+        </a>
+    </div>
     </div>
 
 </body>

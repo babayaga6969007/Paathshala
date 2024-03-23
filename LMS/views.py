@@ -4,7 +4,8 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.db.models import Sum
 from django.contrib import messages
-
+from app.models import Profile, Course
+import random
 
 def BASE(request):
     return render(request, 'base.html')
@@ -77,27 +78,40 @@ def SEARCH_COURSE(request):
     }
     return render(request,'search/search.html',context)
 
-def COURSE_DETAILS(request, slug):
-    category=Categories.get_all_categories(Categories)
-    time_duration = Video.objects.filter(course__slug=slug).aggregate(sum=Sum('time_duration'))
-    course_id=Course.objects.get(slug=slug)
-    try:
-        check_enroll=UserCource.objects.get(user=request.user, course=course_id)
-    except UserCource.DoesNotExist:
-        check_enroll=None    
-    course = Course.objects.filter(slug = slug)
-    if course.exists():
-        course=course.first()
-    else:
-        return redirect('404')   
-    context = {
-        'course':course,
-        'category':category,
-        'time_duration':time_duration,
-        'check_enroll':check_enroll,
-    } 
 
-    return render(request,'course/course_details.html', context)
+
+
+
+from django.shortcuts import redirect
+
+def COURSE_DETAILS(request, slug):
+    category = Categories.get_all_categories(Categories)
+    time_duration = Video.objects.filter(course__slug=slug).aggregate(sum=Sum('time_duration'))
+    course = Course.objects.filter(slug=slug).first()
+    if not course:
+        return redirect('404')
+
+    try:
+        user_enrolled_courses = UserCource.objects.filter(user=request.user).values_list('course', flat=True)
+    except UserCource.DoesNotExist:
+        user_enrolled_courses = []
+
+    # Filter out courses that the user has already enrolled in
+    all_courses = Course.objects.exclude(id__in=user_enrolled_courses)
+    all_courses = list(all_courses)
+    random.shuffle(all_courses) 
+
+    context = {
+        'course': course,
+        'category': category,
+        'time_duration': time_duration,
+        'all_courses': all_courses[:3],
+    }
+
+    return render(request, 'course/course_details.html', context)
+
+
+
 
 def PAGE_NOT_FOUND(request):
     category=Categories.get_all_categories(Categories)
@@ -134,15 +148,14 @@ def WATCH_COURSE(request,slug):
     course=Course.objects.filter(slug=slug)
     lecture=request.GET.get('lecture')
     video=Video.objects.get(id=lecture)
-        
     if course.exists():
         course=course.first()
     else:
-        return redirect('404')
+        return redirect('404')    
     context={
         'course':course,
-        'video':video,
-    }                         
+        'video' : video,
+    }
     return render(request,'course/watch-course.html',context)
 
 def TOOLS(request):
@@ -160,5 +173,69 @@ def PDFCON(request):
     return render(request,'Main/tools/pdf compressor.html',)
 def PDFWORD(request):
     return render(request,'Main/tools/pdf to word.html',)
+def RESUME(request):
+    return render(request,'Main/tools/resume.html',)
+def JARVIS(request):
+    return render(request,'Main/tools/jarvis.html',)
 
+def course_profile(request):
+    course_id = request.GET.get('course_id')
+    course = None
+    if course_id:
+        try:
+            course = Course.objects.get(id=course_id)
+        except Course.DoesNotExist:
+            # Handle the case where the course doesn't exist
+            pass
 
+    user_profile = Profile.objects.get(user=request.user)
+    interests = user_profile.interests.split(',')
+    
+
+    recommended_courses = []
+    for interest in interests:
+        interest = interest.strip()
+        courses = Course.objects.filter(title__icontains=interest)
+        recommended_courses.extend(courses)
+
+    context = {
+        'course': course,
+        'recommended_courses': recommended_courses
+    }
+    return render(request, 'course_details.html', context)
+
+def jaccard_similarity(set1, set2):
+    intersection = len(set1.intersection(set2))
+    union = len(set1.union(set2))
+    jaccard_index = intersection / union
+    return jaccard_index
+def courses_from_interests(interests, courses_data):
+    courses_similarity = {}
+    for course, course_interests in courses_data.items():
+        similarity = jaccard_similarity(interests, course_interests)
+        courses_similarity[course] = similarity
+    sorted_courses = sorted(courses_similarity.items(), key=lambda x: x[1], reverse=True)
+    sorted_courses = [course[0] for course in sorted_courses]
+    return sorted_courses
+def recommend_courses(request):
+    # Fetch all user interests from the database
+    all_users_interests = get_all_users_interests()
+    
+    recommended_courses = []
+    
+    for interests in all_users_interests:
+        recommended_courses.extend(courses_from_interests(interests))
+    
+    return render(request, 'course_details.html', {'recommended_courses': recommended_courses})
+
+def get_all_users_interests():
+    # Query all user profiles and retrieve their interests
+    all_profiles = Profile.objects.all()
+    all_users_interests = [set(profile.interests.split(',')) for profile in all_profiles]
+    return all_users_interests
+
+def courses_from_interests(interests):
+    # Query courses from the database based on interests
+    # Assuming that interests are stored as tags in the Course model
+    courses = Course.objects.filter(tags__in=interests).distinct()
+    return courses

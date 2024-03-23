@@ -19,4 +19,6 @@ admin.site.register(Requirements)
 admin.site.register(Lesson)
 admin.site.register(Language)
 admin.site.register(UserCource)
+admin.site.register(Profile)
+
 

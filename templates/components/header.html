@@ -22,7 +22,7 @@
                                 </svg>
 
                             </div>
-                            <span class="text-gigas fw-medium me-1">Courses</span>
+                            <a href="http://127.0.0.1:8000/courses" class="text-gigas fw-medium me-1">Courses</a>
                         </div>
                     </a>
 
@@ -92,12 +92,13 @@
                         </a>
 
                     </li>
-                    <li class="nav-item dropdown dropdown-full-width">
-                        <a class="nav-link text-gigas"  href="{% url 'my_course' %}">
-                            My Courses
-                        </a>
-
-                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown dropdown-full-width">
+                            <a class="nav-link text-gigas"  href="{% url 'my_course' %}">
+                                My Courses
+                            </a>
+                        </li>
+                    {% endif %}
                      {% if user.is_authenticated and user.first_name == '' %}
                      <li class="nav-item dropdown border-0 px-1 px-md-3">
                          <a class="nav-link dropdown-toggle" id="user" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">

@@ -29,6 +29,10 @@ urlpatterns = [
     path('tools/jpg_converter',views.IMGCON, name='imgcon'),
     path('tools/pdf_compressor',views.PDFCON, name='pdfcon'),
     path('tools/pdf_toword',views.PDFWORD, name='pdfword'),
+    path('tools/resume',views.RESUME, name='resume'),
+    path('tools/jarvis',views.JARVIS, name='jarvis'),
+
+
     
 
 

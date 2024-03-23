@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from app.EmailBackEnd import EmailBackEnd
 from django.contrib.auth import authenticate,login,logout
+from app.models import Profile 
 def REGISTER(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -52,6 +53,7 @@ def Profile_Update(request):
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        interests = request.POST.get('interests')
         user_id = request.user.id
 
         user = User.objects.get(id=user_id)
@@ -63,5 +65,11 @@ def Profile_Update(request):
         if password != None and password != "":
             user.set_password(password)
         user.save()
-        messages.success(request,'Profile Are Successfully Updated. ')
+
+        # Now handle the interests and update the profile
+        profile, created = Profile.objects.get_or_create(user=user)  # Get or create the profile
+        profile.interests = interests
+        profile.save()
+
+        messages.success(request, 'Profile has been successfully updated.')
         return redirect('profile')
